@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adivina El Numero</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="back-btn" onclick="goBackToGameHub()">← Volver al GameHub</button>
+    <script>
+      function goBackToGameHub() {
+        // Método más simple y confiable: usar el historial del navegador
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Si no hay historial, intenta navegación alternativa
+          let currentPath = window.location.href;
+          if (currentPath.includes('/Minigames/')) {
+            // Encuentra la posición de GameHub y navega hacia el index.html
+            let baseIndex = currentPath.indexOf('/GameHub/');
+            if (baseIndex !== -1) {
+              window.location.href = currentPath.substring(0, baseIndex + 9) + 'index.html';
+            }
+          }
+        }
+      }
+    </script>
+  <center>
+  <header id="main-header">
+      <div class="banner">
+        <h1 class="choice">Adivina el numero</h1>
+      </div>
+  </header>
+
+  <main>
+    <section class="contenedor">
+      <!-- Selector de dificultad -->
+      <div class="item">
+        <span>Dificultad:</span>
+        <select id="difficulty_select" style="background-color: #fff; border: 2px solid #c8c8c8; padding: 5px; font-family: Arial, Helvetica, sans-serif;">
+          <option value="noob">Noob (1-10, 8 intentos)</option>
+          <option value="facil">Fácil (1-15, 7 intentos)</option>
+          <option value="medio">Medio (1-30, 5 intentos)</option>
+          <option value="dificil">Difícil (1-100, 3 intentos)</option>
+          <option value="insano">Insano (1-150, 2 intentos)</option>
+          <option value="imposible">Imposible (1-300, 1 intento)</option>
+          <option value="???">??? (1-500, 1 intento)</option>
+        </select>
+      </div>
+
+      <!-- Información de dificultad actual -->
+      <div class="item">
+        <span>Dificultad actual:</span>
+        <span id="selected_difficulty">Noob (1-10, 8)</span>
+      </div>
+      
+      <div class="item">
+        <span>Rango:</span>
+        <span id="rango_info">1 - 10</span>
+      </div>
+      
+      <!-- TEMPORIZADOR (nuevo) -->
+      <div class="item">
+        <span>⏱️ Tiempo restante:</span>
+        <span id="temporizador">30s</span>
+      </div>
+      
+      <!-- Juego principal -->
+      <div class="item" style="flex-direction: column; align-items: stretch;">
+        <p style="margin-top: 0; text-align: center;">INGRESA EL NÚMERO</p>
+        <input type="text" onkeypress="return justNumbers(event)" placeholder="Ejemplo: 5" id="number_input" style="width: 90%; padding: 8px; border: 2px solid #c8c8c8; font-family: Arial, Helvetica, sans-serif; margin: 0 auto 10px auto; display: block;">
+        
+        <button id="input_btn_check" style="width: 100%;">INTENTAR</button>
+      </div>
+      
+      <div class="item">
+        <span>Intentos restantes:</span>
+        <span id="intentos">8</span>
+      </div>
+    </section>
+  </main>
+
+  </center>
+  
+  <script src="script.js"></script>
+</body>
+</html>

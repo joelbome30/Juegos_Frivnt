@@ -1,0 +1,126 @@
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #0b2536;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #e9eef5;
+    
+    /* Layout */
+    display: flex;
+    justify-content: center;      /* centra horizontal */
+    align-items: flex-start;      /* permite crecer hacia abajo */
+    
+    overflow-y: auto;             /* scroll vertical */
+}
+
+/* Botón de volver */
+.back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background-color: #003d6b;
+    color: #fff;
+    border: 2px solid #062a45;
+    padding: 10px 20px;
+    border-radius: 0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 3px 0 #062a45;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.back-btn:hover {
+    background-color: #0b59a8;
+    transform: translateX(-5px);
+}
+
+.back-btn:active {
+    box-shadow: 0 0 0 #062a45;
+    border-bottom: 2px solid #062a45;
+}
+
+/* Contenedor principal */
+.contenedor {
+    width: 20rem;
+    background-color: #f0f3f6;
+    padding: 2rem;
+    margin: 1rem 0;               /* espacio entre contenedores */
+    border-radius: 0;
+    border: 2px solid #c9d6e6;
+    color: #0b2536;
+}
+/* Botones */
+button,.back-btn,
+button:focus {
+ align-self:start; background:#0b6fb2; color:#fff; padding:6px 10px; text-decoration:none; font-weight:700; border:2px solid #064a78
+}
+
+button:hover {
+    background-color: rgb(15, 127, 202)
+}
+
+button:active {
+    box-shadow: 0 0 0 #052d4a;
+    border-bottom: 2px solid #052d4a;
+}
+
+
+/* Items de tienda */
+.item {
+    background-color: #fff;
+    color: #0b2536;
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-radius: 0;
+    border: 2px solid #c8c8c8;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.glitch-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 24px;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.glitch-text {
+    position: absolute;
+    white-space: nowrap;
+    animation: caer 1.5s linear forwards;
+}
+
+@keyframes caer {
+    from {
+        transform: translateY(-50px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+}
+
+input{
+    font-size: 17px;
+    color: #000000;
+    border: 2px solid #064a78;
+    border-bottom: 3px solid #052d4a;
+    cursor: text;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+}   

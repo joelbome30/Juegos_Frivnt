@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="back-btn" onclick="goBackToGameHub()">← Volver al GameHub</button>
+    <script>
+      function goBackToGameHub() {
+        // Método más simple y confiable: usar el historial del navegador
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Si no hay historial, intenta navegación alternativa
+          let currentPath = window.location.href;
+          if (currentPath.includes('/Minigames/')) {
+            // Encuentra la posición de GameHub y navega hacia el index.html
+            let baseIndex = currentPath.indexOf('/GameHub/');
+            if (baseIndex !== -1) {
+              window.location.href = currentPath.substring(0, baseIndex + 9) + 'index.html';
+            }
+          }
+        }
+      }
+    </script>
+    
+    <!-- Elementos de audio para sonidos del juego -->
+    <audio id="tieSound" preload="auto">
+        <source src="sonidos/denied_sfx.mp3" type="audio/mpeg">
+    </audio>
+    
+    <center>
+    <h1>Piedra Papel Y Tijeras</h1>
+    <h2>Tiempo: <span id="timer_obj">20</span>s</h2>
+    <div id="result-message" style="font-size: 20px; font-weight: bold; color: #0b2536; min-height: 30px; margin: 10px 0;"></div>
+    <div class="cpu">
+        <p>🤖<span id="cpu_points_obj">0</span></p>
+        <h1 id="cpu_answer" class="choice">📝</h1>
+    </div>
+    <br>
+    <div class="jugador">
+        <h1 id="player_choice" class="choice">📝</h1>
+        <p>🧑🏻<span id="player_points_obj">0</span></p>
+        <button id="piedra_btn">Piedra</button>
+        <button id="papel_btn">Papel</button>
+        <button id="tijera_btn">Tijeras</button>
+    </div>
+    </center>
+    <script src="script.js"></script>
+</body>
+</html>

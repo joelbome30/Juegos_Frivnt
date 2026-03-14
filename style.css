@@ -1,0 +1,85 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e9eef5;
+  color: #0b2536;
+}
+
+/* Header */
+#main-header{ background:#003d6b; color:#fff; border-bottom:3px solid #062a45 }
+#main-header .top-blue{ background:#0b59a8; border-bottom:3px solid #083d6f }
+#main-header .top-inner{ display:flex; align-items:center; gap:16px; justify-content:space-between; padding:8px 14px }
+#main-header .brand{ font-weight:900; color:#fff; background:linear-gradient(#ff3b3b,#ff6b6b); padding:6px 10px; border:2px solid #a33; }
+#main-header .top-links{ display:flex; gap:10px; align-items:center }
+#main-header .top-links a{ color:#fff; text-decoration:none; font-size:13px; padding:4px 8px }
+#main-header .top-actions .balance{ color:#fff; font-weight:700; font-size:12px }
+/* Banner */
+#main-header .banner{ background:linear-gradient(135deg, #e0e0e0, #e0e0e0); padding:16px 14px; border-bottom:3px solid #b6b6b6; text-align:center }
+#main-header .banner h1{ margin:0; font-size:32px; font-weight:900; color:#fff; text-shadow:2px 2px 4px rgba(0,0,0,0.3); letter-spacing:2px }
+
+/* Layout */
+
+#layout{ display:flex; gap:0; min-height: calc(100vh - 140px); max-width:1200px; margin:0 auto }
+#sidebar{ width:180px; background:#f0f3f6; padding:12px 10px; border-right:3px solid #c9d6e6 }
+#sidebar h4{ margin:6px 0 8px; font-size:12px }
+#sidebar ul{ list-style:none; padding:0; margin:0 }
+#sidebar a{ display:block; padding:6px 4px; text-decoration:none; color:#0b2536; border-bottom:1px solid #e0e6ea; font-size:12px }
+.sorted strong, .genres strong{ display:block; margin-bottom:6px }
+.sorted ul, .genres ul{ list-style:none; padding:0; margin:0 0 10px 0 }
+.sorted li a, .genres li a{ color:#0b2536; font-size:12px }
+
+#content{ flex:1; padding:12px; display:flex; gap:12px }
+
+/* Grid de tiles (columna central) */
+.center-col{ flex:1 }
+.grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; padding:8px }
+.tile{ display:block; background:#f8f9fb; border:2px solid #c8c8c8; color:inherit; text-decoration:none }
+.tile:hover{ background:#f0f2f6 }
+.thumb{ height:88px; background:#bcd3ee; display:flex; align-items:center; justify-content:center; font-weight:900; color:#062a45; border-bottom:2px solid #c8c8c8 }
+.tp1{ background:#ffd9a8 }
+.tp2{ background:#bfe7ff }
+.tp3{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff }
+.tile-body{ padding:10px }
+.title{ font-size:12px; font-weight:800 }
+.meta{ font-size:10px; color:#274155 }
+.players{ color:#d33; font-size:11px; font-weight:700; margin-top:6px }
+
+/* Nueva vista de tarjetas */
+.games-toolbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px }
+.view-btn{ background:#fff; border:2px solid #c8c8c8; padding:6px 10px; cursor:pointer; font-weight:700 }
+.view-btn.active{ background:#e6eef5 }
+.games-grid{ min-height:200px }
+.game-card{ display:flex; gap:10px; background:#fff; border:2px solid #c8c8c8; padding:8px }
+.game-card .thumb{ width:180px; height:120px; border-bottom:none }
+.card-body{ padding:4px 8px; display:flex; flex-direction:column; gap:6px }
+.card-body .desc{ font-size:11px; color:#415b6a }
+.play-btn{ align-self:start; background:#0b6fb2; color:#fff; padding:6px 10px; text-decoration:none; font-weight:700; border:2px solid #064a78 }
+
+/* Lista (vista en columna) */
+.list-view .games-grid{ display:flex; flex-direction:column; gap:10px }
+.list-view .game-card{ align-items:center }
+.list-view .game-card .thumb{ width:160px; height:90px }
+
+@media (max-width:900px){
+  .grid{ grid-template-columns: repeat(2, 1fr) }
+  .game-card{ flex-direction:column }
+  .game-card .thumb{ width:100%; height:140px }
+}
+
+/* Featured area on the right like the screenshot */
+.featured{ width:360px }
+.featured-box{ height:360px; background:linear-gradient(180deg,#cfe7ff,#9bbfe5); border:2px solid #b6d0e8; display:flex; align-items:center; justify-content:center; font-weight:800; color:#062a45; text-align:center }
+.featured-box .large{ display:block; margin-top:6px; font-size:22px }
+
+/* Footer */
+#footer{ padding:14px 18px; border-top:2px solid #c8d2df; background:#f3f6f9; font-size:11px }
+
+/* Confetti (rectangular) */
+#confetti-root{ position:fixed; inset:0; pointer-events:none; z-index:40 }
+.confetti{ position:absolute; width:6px; height:12px; border-radius:0; opacity:0.95; transform: translateY(0); animation: confetti-fall 1200ms linear forwards }
+@keyframes confetti-fall{ to{ transform: translateY(110vh) rotate(180deg); opacity:0.9 } }
+
+/* Helpers */
+.container{ max-width:1100px; margin:0 auto }

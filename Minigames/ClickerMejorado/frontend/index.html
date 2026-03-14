@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="back-btn" onclick="goBackToGameHub()">← Volver al GameHub</button>
+    <script>
+      function goBackToGameHub() {
+        // Método más simple y confiable: usar el historial del navegador
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Si no hay historial, intenta navegación alternativa
+          let currentPath = window.location.href;
+          if (currentPath.includes('/Minigames/')) {
+            // Encuentra la posición de GameHub y navega hacia el index.html
+            let baseIndex = currentPath.indexOf('/GameHub/');
+            if (baseIndex !== -1) {
+              window.location.href = currentPath.substring(0, baseIndex + 9) + 'index.html';
+            }
+          }
+        }
+      }
+    </script>
+    <center>
+    <div class="contenedor">
+      <div class="item" style="font-weight: 700">
+          <p>Tiempo faltante: <span id="timer">0</span>/60</p>
+      </div>
+          <p>Cantidad de clicks: <span id="nClicks">0</span></p>
+          <p>Nivel: <span id="nivel">1</span></p>
+          <p>Incremento de clicks: <span id="incremento">1</span></p>
+          <p>Clicks para subir de nivel: <span id="clicksReqParaUpgrade">1</span></p>
+      <button id="btnClicker" class="vista-button">Presiona aqui</button>
+    </div>
+
+
+    <div class="contenedor">
+        <h1>Tienda de mejoras</h1> 
+            <div class="item">
+                <p>1 click por segundo</p>
+                <p>Precio: 200 clicks</p>
+                <button onclick="mejora1()">Comprar</button></li>
+            </div>
+            <div class="item">
+                <p>5 click por segundo</p>
+                <p>Precio: 600 clicks</p>
+                <button onclick="mejora2()">Comprar</button></li>
+            </div>
+            <div class="item">
+                <p>10 click por segundo</p>
+                <p>Precio: 1200 clicks</p>
+                <button onclick="mejora3()">Comprar</button></li>
+            </div>
+            <div class="item">
+                <p>Quitar 30seg</p>
+                <p>Precio: 500 clicks</p>
+                <button onclick="mejora4()">Comprar</button></li>
+            </div>
+    </center>
+    <script src="script.js"></script>
+</body>
+</html>
