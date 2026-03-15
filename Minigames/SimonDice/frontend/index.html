@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Dice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="back-btn" onclick="goBackToGameHub()">← Volver al GameHub</button>
+    <script>
+        function goBackToGameHub() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                let currentPath = window.location.href;
+                if (currentPath.includes('/Minigames/')) {
+                    let baseIndex = currentPath.indexOf('/GameHub/');
+                    if (baseIndex !== -1) {
+                        window.location.href = currentPath.substring(0, baseIndex + 9) + 'index.html';
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <center>
+        <header id="main-header">
+            <div class="banner">
+                <h1 class="choice">Simon Dice</h1>
+            </div>
+        </header>
+
+        <main>
+            <section class="contenedor">
+                <!-- Puntuación -->
+                <div class="item">
+                    <span>Ronda actual:</span>
+                    <span id="ronda">0</span>
+                </div>
+                
+                <div class="item">
+                    <span>🏆 Récord:</span>
+                    <span id="record">0</span>
+                </div>
+                
+                <!-- Los 4 botones de colores -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0;">
+                    <div class="boton-color verde" id="verde" data-color="verde" style="aspect-ratio: 1; background: #4CAF50; cursor: pointer; transition: all 0.2s;"></div>
+                    <div class="boton-color rojo" id="rojo" data-color="rojo" style="aspect-ratio: 1; background: #F44336; cursor: pointer; transition: all 0.2s;"></div>
+                    <div class="boton-color amarillo" id="amarillo" data-color="amarillo" style="aspect-ratio: 1; background: #FFC107; cursor: pointer; transition: all 0.2s;"></div>
+                    <div class="boton-color azul" id="azul" data-color="azul" style="aspect-ratio: 1; background: #2196F3; cursor: pointer; transition: all 0.2s;"></div>
+                </div>
+                
+                <!-- Botón de iniciar -->
+                <div class="item" style="flex-direction: column;">
+                    <button id="startBtn" style="width: 100%; margin-bottom: 10px;">INICIAR JUEGO</button>
+                    <div style="background: #fff; padding: 10px; border: 2px solid #c8c8c8; width: 100%; box-sizing: border-box;">
+                        <span id="mensaje">Presiona INICIAR</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </center>
+    
+    <script src="script.js"></script>
+</body>
+</html>
