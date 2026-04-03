@@ -5,6 +5,7 @@ let paso = 0;
 let jugando = false;
 let bloqueado = true;
 let record = localStorage.getItem('simonRecord') || 0;
+let playerName = ""; // Nombre del jugador
 
 // Elementos del DOM
 const botones = {
@@ -17,6 +18,53 @@ const startBtn = document.getElementById('startBtn');
 const rondaSpan = document.getElementById('ronda');
 const recordSpan = document.getElementById('record');
 const mensaje = document.getElementById('mensaje');
+
+// Función para solicitar nombre del jugador
+async function solicitarNombre() {
+    return new Promise((resolve) => {
+        const nombre = prompt("Ingresa tu nombre para guardar tu puntaje:");
+        if (nombre && nombre.trim() !== "") {
+            playerName = nombre.trim();
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+}
+
+// Función para guardar puntaje en el backend
+async function guardarPuntaje(score) {
+    if (!playerName) {
+        const nombreIngresado = await solicitarNombre();
+        if (!nombreIngresado) {
+            return; // No guardar si no hay nombre
+        }
+    }
+
+    try {
+        const response = await fetch('http://localhost:5004/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player: playerName,
+                game: 'simondice',
+                score: score
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            console.log('Puntaje guardado exitosamente');
+        } else {
+            console.error("Error al guardar puntaje:", result.error);
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+    }
+}
 
 // Mostrar record
 recordSpan.textContent = record;    
@@ -58,6 +106,8 @@ function actualizarRecord() {
         record = ronda;
         recordSpan.textContent = record;
         localStorage.setItem('simonRecord', record);
+        // Guardar nuevo record en el backend
+        guardarPuntaje(record);
     }
 }
 
@@ -90,6 +140,8 @@ function gameOver() {
     mensaje.textContent = 'GAME OVER!';
     startBtn.disabled = false;
     actualizarRecord();
+    // Guardar puntaje final (rondas completadas)
+    guardarPuntaje(ronda);
 }
 
 // Eventos de los botones

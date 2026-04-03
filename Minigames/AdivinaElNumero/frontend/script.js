@@ -6,6 +6,7 @@ let selected_difficulty_text = document.getElementById("selected_difficulty")
 let rango_text_obj = document.getElementById("rango_info")
 let temporizador_text_obj = document.getElementById("temporizador")
 let number_input_obj = document.getElementById("number_input")
+let playerName = ""; // Nombre del jugador
 // SoundManager para manejar sonidos superpuestos
 const soundManager = {
     sounds: {},
@@ -48,6 +49,53 @@ const soundManager = {
 // Cargar sonidos
 soundManager.loadSound('money', 'sonidos/money_sfx.mp3', 0.5);
 soundManager.loadSound('denied', 'sonidos/denied_sfx.mp3', 0.4);
+
+// Función para solicitar nombre del jugador
+async function solicitarNombre() {
+    return new Promise((resolve) => {
+        const nombre = prompt("Ingresa tu nombre para guardar tu puntaje:");
+        if (nombre && nombre.trim() !== "") {
+            playerName = nombre.trim();
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+}
+
+// Función para guardar puntaje en el backend
+async function guardarPuntaje(score) {
+    if (!playerName) {
+        const nombreIngresado = await solicitarNombre();
+        if (!nombreIngresado) {
+            return; // No guardar si no hay nombre
+        }
+    }
+
+    try {
+        const response = await fetch('http://localhost:5002/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player: playerName,
+                game: 'adivinaelnumero',
+                score: score
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            console.log('Puntaje guardado exitosamente');
+        } else {
+            console.error("Error al guardar puntaje:", result.error);
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+    }
+}
 soundManager.loadSound('levelup', 'sonidos/lvl_up_sfx.wav', 0.6);
 soundManager.loadSound('win', 'sonidos/winner_sfx.mp3', 0.6);
 soundManager.loadSound('lose', 'sonidos/loser_sfx.mp3', 0.6);
@@ -167,6 +215,19 @@ input_btn_check_obj.addEventListener('click', () => {
     if (number_input === secret_number){
         soundManager.play('money'); // Sonido de acierto
         alert("¡Acertaste!")
+        
+        // Calcular puntaje basado en dificultad
+        let baseScore = 0;
+        if (dificultad_actual === 'facil') baseScore = 10;
+        else if (dificultad_actual === 'medio') baseScore = 20;
+        else if (dificultad_actual === 'dificil') baseScore = 30;
+        
+        // Bonus por intentos restantes
+        const bonus = intentos * 2;
+        const score = baseScore + bonus;
+        
+        guardarPuntaje(score);
+        
         secret_number = random_number(min_rango, max_rango)
         console.log("Número secreto:", secret_number)
         alert("Intenta adivinar denuevo")

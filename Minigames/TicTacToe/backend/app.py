@@ -92,20 +92,19 @@ def leaderboard():
     # Verificamos que el nombre del juego no esté vacío
     if game == "":
         return jsonify(ok=False, error="falta game en query ?game="),400
-    
-    if supabase is None:
-        # Si no hay conexión a Supabase, devolvemos datos simulados
-        return jsonify(ok=True, game=game, top5=[
-            {"player": "Jugador1", "score": 100, "created_at": "2024-01-01"},
-            {"player": "Jugador2", "score": 90, "created_at": "2024-01-01"},
-            {"player": "Jugador3", "score": 80, "created_at": "2024-01-01"}
-        ])
-    
     # Buscamos en la base de datos los puntajes del juego solicitado
     # Seleccionamos el jugador, puntaje y fecha de creación
     # Filtramos solo los puntajes del juego especificado
     # Los ordenamos de mayor a menor puntaje
     # Limitamos los resultados a solo 5
+    if supabase is None:
+        # Si no hay conexión a Supabase, devolvemos datos simulados
+        return jsonify(ok=True, game=game, top5=[
+            {"player": "Jugador1", "score": 10, "created_at": "2024-01-01"},
+            {"player": "Jugador2", "score": 5, "created_at": "2024-01-01"},
+            {"player": "Jugador3", "score": 0, "created_at": "2024-01-01"}
+        ])
+    
     resp = (supabase.table("scores")
     .select("player, score, created_at")
     .eq("game", game)
@@ -116,5 +115,5 @@ def leaderboard():
     return jsonify(ok=True, game=game, top5=resp.data)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True)
  

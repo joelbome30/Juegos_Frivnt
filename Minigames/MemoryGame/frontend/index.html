@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Memoria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="back-btn" onclick="goBackToGameHub()">← Volver al GameHub</button>
+    <script>
+      function goBackToGameHub() {
+        // Método más simple y confiable: usar el historial del navegador
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          // Si no hay historial, intenta navegación alternativa
+          let currentPath = window.location.href;
+          if (currentPath.includes('/Minigames/')) {
+            // Encuentra la posición de GameHub y navega hacia el index.html
+            let baseIndex = currentPath.indexOf('/GameHub/');
+            if (baseIndex !== -1) {
+              window.location.href = currentPath.substring(0, baseIndex + 9) + 'index.html';
+            }
+          }
+        }
+      }
+    </script>
+  <center>
+  <header id="main-header">
+      <div class="banner">
+        <h1>Juego de Memoria</h1>
+        <p>Encuentra todos los pares de cartas</p>
+      </div>
+  </header>
+
+  <main>
+    <section class="contenedor">
+      <div id="game-board">
+        <!-- Las cartas se generarán aquí con JavaScript -->
+      </div>
+      <div class="item">
+        <div id="score">Intentos: 0</div>
+        <button id="reiniciar">Reiniciar</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

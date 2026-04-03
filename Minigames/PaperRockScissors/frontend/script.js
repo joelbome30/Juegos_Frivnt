@@ -13,6 +13,54 @@ let tieSound = document.getElementById("tieSound")
 //puntos
 let cpu_points = 0
 let player_points = 0
+let playerName = ""; // Nombre del jugador
+
+// Función para solicitar nombre del jugador
+async function solicitarNombre() {
+    return new Promise((resolve) => {
+        const nombre = prompt("Ingresa tu nombre para guardar tu puntaje:");
+        if (nombre && nombre.trim() !== "") {
+            playerName = nombre.trim();
+            resolve(true);
+        } else {
+            resolve(false);
+        }
+    });
+}
+
+// Función para guardar puntaje en el backend
+async function guardarPuntaje(score) {
+    if (!playerName) {
+        const nombreIngresado = await solicitarNombre();
+        if (!nombreIngresado) {
+            return; // No guardar si no hay nombre
+        }
+    }
+
+    try {
+        const response = await fetch('http://localhost:5003/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                player: playerName,
+                game: 'paperrockscissors',
+                score: score
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            console.log('Puntaje guardado exitosamente');
+        } else {
+            console.error("Error al guardar puntaje:", result.error);
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+    }
+}
 //timer
 let timer = null
 let tiempo_restante = 20
@@ -85,6 +133,7 @@ function checkWinner() {
         result_message_obj.textContent = "¡Ganaste la partida! 🎉"
         result_message_obj.style.color = "#388e3c"
         alert("¡Felicidades! ¡Ganaste la partida!")
+        guardarPuntaje(50); // Victoria
         // Reiniciar contadores
         player_points = 0
         cpu_points = 0
@@ -94,6 +143,7 @@ function checkWinner() {
     if (cpu_points == 5){
         result_message_obj.textContent = "CPU ganó la partida"
         result_message_obj.style.color = "#d32f2f"
+        guardarPuntaje(0); // Derrota
         // Reiniciar contadores
         player_points = 0
         cpu_points = 0
